@@ -2,7 +2,7 @@
 
 > **RimWorld 1.6 · Highly experimental / 高度实验性**
 
-![简介 / Introduction](抬头图/01_简介_Introduction.jpg)
+![简介 / Introduction](抬头图/01_简介_Introduction.png)
 
 **⚠️ 这是一个很不稳定的实验性模组。** 阵营、种族、人物种类和异种之间的生成关系非常复杂，尤其在大型模组列表、多个同种族阵营扩展并存或特殊袭击规则下，仍可能出现比例偏差、保留原种族、生成失败或红字。请先备份存档，并在正式游玩前用新档测试你的模组组合。
 
@@ -12,7 +12,7 @@
 
 Faction Race Diversity adds per-faction race proportions and per-race xenotype pools to the mod settings. It affects newly generated pawns only and does not rewrite existing pawns.
 
-![内容 / Content](抬头图/02_内容_Content.jpg)
+![内容 / Content](抬头图/02_内容_Content.png)
 
 | 功能 / Feature | 实际效果 / What it does |
 |---|---|
@@ -33,7 +33,7 @@ Faction Race Diversity adds per-faction race proportions and per-race xenotype p
 3. 点击 **遵循原始规则** 可删除外部阵营的自定义覆盖；两个内置阵营会恢复所有当前人形 Race 等权。  
    **Follow original rules** removes custom overrides for external factions and restores equal weights for the two bundled factions.
 
-![兼容性 / Compatibility](抬头图/03_兼容性_Compatibility.jpg)
+![兼容性 / Compatibility](抬头图/03_兼容性_Compatibility.png)
 
 ### 版本与依赖 / Version and requirements
 
@@ -100,7 +100,7 @@ Faction Race Diversity adds per-faction race proportions and per-race xenotype p
 - 可选种族、基因与阵营扩展尽量放在本模组之前。 / Load optional race, gene and faction mods before this mod.
 - 不建议在重要存档中一次加入或移除大量相关种族模组。 / Avoid adding or removing many related race mods at once in an important save.
 
-![问答 / Q&A](抬头图/04_问答_QA.jpg)
+![问答 / Q&A](抬头图/04_问答_QA.png)
 
 ### 中文
 
@@ -133,7 +133,7 @@ Quest pawns, scenario pawns, babies, mutants, special roles, hard-forced xenotyp
 **Why can a 100% setting still miss some pawns?**  
 Special raid roles, fixed quest pawns and custom generation paths from other mods may impose extra constraints. Please report the log, mod list, faction and expected race in GitHub Issues.
 
-![GitHub 链接 / GitHub Link](抬头图/05_GitHub链接_GitHub_Link.jpg)
+![GitHub 链接 / GitHub Link](抬头图/05_GitHub链接_GitHub_Link.png)
 
 - Repository: <https://github.com/269435403/FactionRaceDiversity>
 - Bugs and compatibility reports: <https://github.com/269435403/FactionRaceDiversity/issues>
