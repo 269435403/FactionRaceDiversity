@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <FactionDef ParentName="OutlanderFactionBase">
+    <defName>MPF_MixedCivil</defName>
+    <label>mixed peoples alliance</label>
+    <description>An alliance of settlers from many peoples and bloodlines. They rely on trade and mutual trust, and are generally welcoming to outsiders.</description>
+    <pawnSingular>alliance member</pawnSingular>
+    <pawnsPlural>alliance members</pawnsPlural>
+    <leaderTitle>first speaker</leaderTitle>
+    <colorSpectrum>
+      <li>(0.20, 0.55, 0.45)</li>
+      <li>(0.45, 0.85, 0.70)</li>
+    </colorSpectrum>
+    <requiredCountAtGameStart>0</requiredCountAtGameStart>
+    <startingCountAtWorldCreation>1</startingCountAtWorldCreation>
+    <maxConfigurableAtWorldCreation>9999</maxConfigurableAtWorldCreation>
+    <configurationListOrderPriority>11</configurationListOrderPriority>
+  </FactionDef>
+
+  <FactionDef ParentName="OutlanderRoughBase">
+    <defName>MPF_MixedRough</defName>
+    <label>rough mixed peoples alliance</label>
+    <description>A loose alliance of settlers from many peoples and bloodlines. They prize strength and distrust outsiders, but they are not beyond negotiation.</description>
+    <pawnSingular>rough alliance member</pawnSingular>
+    <pawnsPlural>rough alliance members</pawnsPlural>
+    <leaderTitle>war speaker</leaderTitle>
+    <factionIconPath>World/WorldObjects/Expanding/TownRough</factionIconPath>
+    <colorSpectrum>
+      <li>(0.48, 0.18, 0.12)</li>
+      <li>(0.78, 0.42, 0.22)</li>
+    </colorSpectrum>
+    <requiredCountAtGameStart>0</requiredCountAtGameStart>
+    <startingCountAtWorldCreation>1</startingCountAtWorldCreation>
+    <maxConfigurableAtWorldCreation>9999</maxConfigurableAtWorldCreation>
+    <configurationListOrderPriority>21</configurationListOrderPriority>
+  </FactionDef>
+</Defs>

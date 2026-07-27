@@ -1,0 +1,10 @@
+**/bin/
+**/obj/
+*.pdb
+*.user
+*.suo
+.vs/
+.idea/
+__pycache__/
+*.pyc
+Player.log

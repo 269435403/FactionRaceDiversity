@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <FRD_ModName>阵营种族多样性</FRD_ModName>
+  <FRD_FactionSearch>搜索阵营</FRD_FactionSearch>
+  <FRD_ShowHiddenFactions>显示隐藏阵营</FRD_ShowHiddenFactions>
+  <FRD_ShowUnsupportedFactions>显示不可用阵营</FRD_ShowUnsupportedFactions>
+  <FRD_Supported>可调整</FRD_Supported>
+  <FRD_Unsupported>不可调整</FRD_Unsupported>
+  <FRD_NoFactionMatches>没有符合条件的阵营。</FRD_NoFactionMatches>
+  <FRD_SelectFaction>请选择一个阵营。</FRD_SelectFaction>
+  <FRD_CurrentFaction>{0}</FRD_CurrentFaction>
+  <FRD_FactionSource>来源：{0}</FRD_FactionSource>
+  <FRD_CoreSource>游戏本体</FRD_CoreSource>
+  <FRD_UnsupportedNonHumanlike>该阵营不使用人形成员。</FRD_UnsupportedNonHumanlike>
+  <FRD_UnsupportedNoPawnKinds>该阵营没有标准成员生成规则。</FRD_UnsupportedNoPawnKinds>
+  <FRD_UnsupportedNoHumanlikePawnKinds>该阵营没有可用的人形成员类型。</FRD_UnsupportedNoHumanlikePawnKinds>
+  <FRD_BiotechUnavailable>未启用生物科技，无法调整异种比例。</FRD_BiotechUnavailable>
+  <FRD_XenotypeSection>异种权重</FRD_XenotypeSection>
+  <FRD_XenotypeWeightTooltip>权重越高越容易出现；特殊成员类型可能保留自身规则。</FRD_XenotypeWeightTooltip>
+  <FRD_RaceSection>种族比例</FRD_RaceSection>
+  <FRD_RaceXenotypeSection>{0}异种比例</FRD_RaceXenotypeSection>
+  <FRD_RaceHasNoPawnKinds>（没有兼容成员类型）</FRD_RaceHasNoPawnKinds>
+  <FRD_RaceWeightTooltip>权重越高越容易出现；不安全或受特殊规则控制的成员会保留原种族。</FRD_RaceWeightTooltip>
+  <FRD_RestoreOriginalRules>遵循原始规则</FRD_RestoreOriginalRules>
+  <FRD_OriginalRulesRestored>{0}已恢复原始生成规则。</FRD_OriginalRulesRestored>
+  <FRD_DebugReportHeader>阵营种族多样性报告</FRD_DebugReportHeader>
+  <FRD_DebugSettingsValid>设置检查通过。</FRD_DebugSettingsValid>
+  <FRD_DebugSettingsInvalid>已修正异常数值并重新应用当前规则。</FRD_DebugSettingsInvalid>
+  <MPF_ModName>阵营种族多样性</MPF_ModName>
+  <MPF_SettingsIntro>调整之后生成的阵营成员种族与异种构成。</MPF_SettingsIntro>
+  <MPF_XenotypeSection>异种权重</MPF_XenotypeSection>
+  <MPF_XenotypeWeightTooltip>权重越高，之后生成的阵营成员越容易使用该异种。</MPF_XenotypeWeightTooltip>
+  <MPF_ResetDefaults>遵循原始规则</MPF_ResetDefaults>
+  <MPF_DefaultsReset>已恢复原始生成规则。</MPF_DefaultsReset>
+  <MPF_BiotechUnavailable>未启用生物科技，无法调整异种比例。</MPF_BiotechUnavailable>
+  <MPF_DebugReportHeader>阵营种族多样性报告</MPF_DebugReportHeader>
+  <MPF_DebugSettingsValid>设置检查通过。</MPF_DebugSettingsValid>
+  <MPF_DebugSettingsInvalid>已修正异常数值并重新应用当前规则。</MPF_DebugSettingsInvalid>
+</LanguageData>

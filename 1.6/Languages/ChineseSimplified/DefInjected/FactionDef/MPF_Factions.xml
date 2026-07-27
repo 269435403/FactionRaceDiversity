@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <MPF_MixedCivil.label>百族同盟</MPF_MixedCivil.label>
+  <MPF_MixedCivil.description>由多个种族与血系混居而成的定居者联盟。他们靠贸易和互信立足，对外人通常也算友善。</MPF_MixedCivil.description>
+  <MPF_MixedCivil.pawnSingular>同盟成员</MPF_MixedCivil.pawnSingular>
+  <MPF_MixedCivil.pawnsPlural>同盟成员</MPF_MixedCivil.pawnsPlural>
+  <MPF_MixedCivil.leaderTitle>首席议员</MPF_MixedCivil.leaderTitle>
+  <MPF_MixedRough.label>粗野百族同盟</MPF_MixedRough.label>
+  <MPF_MixedRough.description>由多个种族与血系组成的松散同盟。他们崇尚力量，对外人抱有敌意，但并非不可交涉。</MPF_MixedRough.description>
+  <MPF_MixedRough.pawnSingular>粗野同盟成员</MPF_MixedRough.pawnSingular>
+  <MPF_MixedRough.pawnsPlural>粗野同盟成员</MPF_MixedRough.pawnsPlural>
+  <MPF_MixedRough.leaderTitle>战争议长</MPF_MixedRough.leaderTitle>
+</LanguageData>

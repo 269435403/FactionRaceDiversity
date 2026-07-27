@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>阵营种族多样性 (Faction Race Diversity)</name>
+  <author>yyyyy</author>
+  <packageId>yyyyy.mixedpeoplesfactions</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <description>Provides direct per-faction race and xenotype proportion controls for loaded humanlike factions. The two bundled mixed-peoples factions permanently use equal weights across all available humanlike races when following original rules. Curated compatibility profiles cover 18 HAR races, 82 internal/vanilla/DLC/first-party faction identifiers, and optional xenotypes from Ratkin, Kiiro, Milira, Miho, Nivarian, Wolfein, Dragonian, Moosesian, and Yuran content. Multiple installed same-race faction expansions are selected as stable per-faction PawnKind variants instead of silently overwriting one another. Existing pawns are not changed.
+
+设置页直接显示种族比例与各 Race 的异种比例，不再使用启用复选框。百族同盟的原始规则永久为所有当前人形 Race 等权。当前内置 18 个 Race 配置显式覆盖 82 个本模组、原版/DLC 与已核对 HAR 来源派系；新增美狐族星环扩展兼容，星环军事实体可使用全部已登记 Race，安装星环扩展时其他派系也可选择美狐族及其原生异种；启用米莉拉 Gene Patch 时，瓦尔基里与派卡萨斯使用各自混血 Race、异种和通用角色。多个同 Race 阵营扩展同时启用时，会按派系稳定分配兵种变体，不再由最后加载项覆盖全部派系。Human 为 0 时，普通袭击、援军、访客、商队商人、护卫及人形商品不会因角色不完全匹配而恢复 Human。</description>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+    <li>erdelf.HumanoidAlienRaces</li>
+    <li>Solaris.RatkinRaceMod</li>
+    <li>HenTaiLoliTeam.Axolotl</li>
+    <li>Epona.EponaDynasticRise</li>
+    <li>Ancot.KiiroRace</li>
+    <li>Ancot.KiiroRaceGenePatch</li>
+    <li>Ancot.MiliraRace</li>
+    <li>keeptpa.NivarianRace</li>
+    <li>EoralMilk.RatkinGeneExpanded</li>
+    <li>MelonDove.WolfeinRace</li>
+    <li>Ancot.WolfeinRaceGenePatch</li>
+    <li>OARK.RatkinFaction.OberoniaAurea</li>
+    <li>RooAndGloomy.DragonianRaceMod</li>
+    <li>Seioch.Kurin.HAR</li>
+    <li>Ariandel.MiliraImperium</li>
+    <li>WaffelF.MoosesianRace</li>
+    <li>RooAndGloomy.YuranRaceMod</li>
+    <li>OARK.RatkinFaction.GeneExpand</li>
+    <li>ZuoYao.KiiroMaineCoon</li>
+    <li>ZuoYao.KiiroOrangeCat</li>
+    <li>ZuoYao.KiiroRagdoll</li>
+    <li>ZuoYao.KiiroSiamese</li>
+    <li>Ancot.MiliraRaceGenePatch</li>
+    <li>HenTaiLoliTeam.Axolotl.FactionExpand</li>
+    <li>fxz.ratkinfaction</li>
+    <li>RKK.RatKnights.Core</li>
+    <li>EoralMilk.RatkinMoustate</li>
+    <li>RKU.RatkinUnderground</li>
+    <li>miho.fortifiedoutremer</li>
+    <li>src.Core.markeazzyh</li>
+  </loadAfter>
+</ModMetaData>

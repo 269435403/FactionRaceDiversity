@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <FRD_ModName>Faction Race Diversity</FRD_ModName>
+  <FRD_FactionSearch>Search factions</FRD_FactionSearch>
+  <FRD_ShowHiddenFactions>Show hidden factions</FRD_ShowHiddenFactions>
+  <FRD_ShowUnsupportedFactions>Show unavailable factions</FRD_ShowUnsupportedFactions>
+  <FRD_Supported>Supported</FRD_Supported>
+  <FRD_Unsupported>Unavailable</FRD_Unsupported>
+  <FRD_NoFactionMatches>No matching factions.</FRD_NoFactionMatches>
+  <FRD_SelectFaction>Select a faction.</FRD_SelectFaction>
+  <FRD_CurrentFaction>{0}</FRD_CurrentFaction>
+  <FRD_FactionSource>Source: {0}</FRD_FactionSource>
+  <FRD_CoreSource>Core game</FRD_CoreSource>
+  <FRD_UnsupportedNonHumanlike>This faction does not use humanlike members.</FRD_UnsupportedNonHumanlike>
+  <FRD_UnsupportedNoPawnKinds>This faction has no standard member generation rules.</FRD_UnsupportedNoPawnKinds>
+  <FRD_UnsupportedNoHumanlikePawnKinds>This faction has no usable humanlike member types.</FRD_UnsupportedNoHumanlikePawnKinds>
+  <FRD_BiotechUnavailable>Biotech is not active, so xenotype controls are unavailable.</FRD_BiotechUnavailable>
+  <FRD_XenotypeSection>Xenotype weights</FRD_XenotypeSection>
+  <FRD_XenotypeWeightTooltip>Higher weights make this xenotype more likely. Special member types may keep their own rules.</FRD_XenotypeWeightTooltip>
+  <FRD_RaceSection>Race proportions</FRD_RaceSection>
+  <FRD_RaceXenotypeSection>{0} xenotype proportions</FRD_RaceXenotypeSection>
+  <FRD_RaceHasNoPawnKinds>(no compatible member type)</FRD_RaceHasNoPawnKinds>
+  <FRD_RaceWeightTooltip>Higher weights make this race more likely. Unsafe or special generation requests keep their original race.</FRD_RaceWeightTooltip>
+  <FRD_RestoreOriginalRules>Follow original rules</FRD_RestoreOriginalRules>
+  <FRD_OriginalRulesRestored>{0} now follows its original generation rules.</FRD_OriginalRulesRestored>
+  <FRD_DebugReportHeader>Faction Race Diversity report</FRD_DebugReportHeader>
+  <FRD_DebugSettingsValid>Settings check passed.</FRD_DebugSettingsValid>
+  <FRD_DebugSettingsInvalid>Invalid values were corrected and active rules were reapplied.</FRD_DebugSettingsInvalid>
+  <MPF_ModName>Faction Race Diversity</MPF_ModName>
+  <MPF_SettingsIntro>Adjust the race and xenotype composition of newly generated faction members.</MPF_SettingsIntro>
+  <MPF_XenotypeSection>Xenotype weights</MPF_XenotypeSection>
+  <MPF_XenotypeWeightTooltip>Higher weights make this xenotype more likely among newly generated faction members.</MPF_XenotypeWeightTooltip>
+  <MPF_ResetDefaults>Follow original rules</MPF_ResetDefaults>
+  <MPF_DefaultsReset>Original generation rules restored.</MPF_DefaultsReset>
+  <MPF_BiotechUnavailable>Biotech is not active. Xenotype controls are unavailable.</MPF_BiotechUnavailable>
+  <MPF_DebugReportHeader>Faction Race Diversity report</MPF_DebugReportHeader>
+  <MPF_DebugSettingsValid>Settings check passed.</MPF_DebugSettingsValid>
+  <MPF_DebugSettingsInvalid>Invalid values were corrected and active rules were reapplied.</MPF_DebugSettingsInvalid>
+</LanguageData>
