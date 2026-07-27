@@ -137,15 +137,4 @@ Special raid roles, fixed quest pawns and custom generation paths from other mod
 
 - Repository: <https://github.com/269435403/FactionRaceDiversity>
 - Bugs and compatibility reports: <https://github.com/269435403/FactionRaceDiversity/issues>
-- 中文交流群：QQ **672646837**
-
-## Build and validation
-
-```powershell
-dotnet build .\Source\MixedPeoplesFactions\MixedPeoplesFactions.csproj --configuration Release --nologo /p:RimWorldDir="<RimWorld install directory>"
-python .\测试\运行静态测试.py
-```
-
-The release assembly is written to `1.6/Assemblies/MixedPeoplesFactions.dll`. A successful build and static test do not replace an in-game test with the intended mod list.
-
-Development notes, compatibility rules, test matrices and the generated Def wiki are included in this repository.
+- 交流群：QQ **672646837**
