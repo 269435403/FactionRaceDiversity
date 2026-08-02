@@ -158,10 +158,10 @@ namespace MixedPeoplesFactions
                 return false;
             }
 
-            XenotypeDef selectedXenotype = request.ForcedXenotype;
+            FRD_XenotypeChoice selectedXenotype = null;
             if (ModsConfig.BiotechActive && !hardForcedXenotype)
             {
-                selectedXenotype = FRD_XenotypeService.SelectWeighted(
+                selectedXenotype = FRD_XenotypeService.SelectWeightedChoice(
                     selected.Xenotypes?.weights,
                     selected.Race,
                     requireCombatKind);
@@ -179,7 +179,10 @@ namespace MixedPeoplesFactions
             {
                 // Ordinary pawn groups arrive here with a xenotype preselected for the original Human PawnKind.
                 // It is a soft group choice and is atomically replaced by the selected Race's own pool.
-                request.ForcedXenotype = selectedXenotype;
+                request.ForcedXenotype = selectedXenotype.Xenotype;
+                request.ForcedCustomXenotype = selectedXenotype.CustomXenotype;
+                request.AllowedXenotypes = null;
+                request.ForceBaselinerChance = 0f;
             }
 
             if (ReferenceEquals(selected.Kind.race, originalKind.race))
@@ -261,6 +264,7 @@ namespace MixedPeoplesFactions
         private static bool IsSpecialRequest(PawnGenerationRequest request, PawnKindDef kind, bool ordinaryGroup)
         {
             if (request.Context == PawnGenerationContext.PlayerStarter
+                || request.ForcedCustomXenotype != null
                 || request.ForcedMutant != null
                 || request.IsCreepJoiner
                 || kind.mutant != null
@@ -276,7 +280,6 @@ namespace MixedPeoplesFactions
             }
             return request.PawnKindDefGetter != null
                 || request.FixedTitle != null
-                || request.ForcedCustomXenotype != null
                 || !request.ForcedXenogenes.NullOrEmpty()
                 || !request.ForcedEndogenes.NullOrEmpty()
                 || !request.AllowedXenotypes.NullOrEmpty()

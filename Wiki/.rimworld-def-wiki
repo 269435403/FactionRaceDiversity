@@ -1,0 +1,11 @@
+{
+  "owner": "rimworld-mod-workbench/generate_wiki.py",
+  "schema": 1,
+  "mode": "mod",
+  "output_root": "D:\\RimWorldModding\\projects\\yyyyy_MixedPeoplesFactions\\Wiki",
+  "source_root": "D:\\RimWorldModding\\projects\\yyyyy_MixedPeoplesFactions",
+  "defs_roots": [
+    "D:\\RimWorldModding\\projects\\yyyyy_MixedPeoplesFactions\\1.6\\Defs"
+  ],
+  "created_or_updated": "2026-08-02"
+}

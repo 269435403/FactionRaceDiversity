@@ -1,0 +1,41 @@
+{
+  "owner": "rimworld-mod-workbench/project_wiki.py",
+  "schema": 1,
+  "checked_date": "2026-08-02",
+  "mode": "mixed",
+  "project": {
+    "name": "阵营种族多样性 (Faction Race Diversity)",
+    "package_id": "yyyyy.mixedpeoplesfactions",
+    "dependencies": [
+      {
+        "package_id": "brrainz.harmony",
+        "display_name": "Harmony"
+      }
+    ]
+  },
+  "sources": {
+    "defs_roots": [
+      "D:\\RimWorldModding\\projects\\yyyyy_MixedPeoplesFactions\\1.6\\Defs"
+    ],
+    "patch_dirs": [],
+    "language_dirs": [
+      "D:\\RimWorldModding\\projects\\yyyyy_MixedPeoplesFactions\\1.6\\Languages\\ChineseSimplified"
+    ]
+  },
+  "errors": [],
+  "warnings": [],
+  "counts": {
+    "def_files": 2,
+    "def_entries": 21,
+    "translation_entries": 48,
+    "definjected_entries": 10,
+    "keyed_entries": 38,
+    "duplicate_records": 0,
+    "empty_records": 0,
+    "conflict_records": 0,
+    "matched_targets": 10,
+    "unmatched_targets": 0,
+    "preserved_manual_markdown": 4
+  },
+  "status": "ok"
+}

@@ -17,6 +17,8 @@
   <FRD_BiotechUnavailable>未启用生物科技，无法调整异种比例。</FRD_BiotechUnavailable>
   <FRD_XenotypeSection>异种权重</FRD_XenotypeSection>
   <FRD_XenotypeWeightTooltip>权重越高越容易出现；特殊成员类型可能保留自身规则。</FRD_XenotypeWeightTooltip>
+  <FRD_PlayerXenotypePresets>玩家制作的预设</FRD_PlayerXenotypePresets>
+  <FRD_CustomXenotypeWeightTooltip>玩家保存的预设不含所属种族信息。将权重设为正数即明确允许该种族使用；禁用暴力的预设不会用于战斗生成。</FRD_CustomXenotypeWeightTooltip>
   <FRD_RaceSection>种族比例</FRD_RaceSection>
   <FRD_RaceXenotypeSection>{0}异种比例</FRD_RaceXenotypeSection>
   <FRD_RaceHasNoPawnKinds>（没有兼容成员类型）</FRD_RaceHasNoPawnKinds>

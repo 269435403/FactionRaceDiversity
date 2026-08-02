@@ -26,6 +26,7 @@ namespace MixedPeoplesFactions
         private Vector2 detailScrollPosition;
         private string factionSearch = string.Empty;
         private string selectedFactionDefName;
+        private readonly Dictionary<string, string> weightInputBuffers = new Dictionary<string, string>();
 
         public override void ExposeData()
         {
@@ -417,10 +418,11 @@ namespace MixedPeoplesFactions
             GUI.enabled = record.SupportsRaces;
             listing.Label("FRD_RaceSection".Translate());
             bool raceChanged = false;
-            float raceTotal = ActiveRaceWeightTotal(displayConfig);
+            List<string> raceKeys = FRD_RaceRegistry.HumanlikeRaces.Select(race => race.defName).ToList();
             foreach (ThingDef race in FRD_RaceRegistry.HumanlikeRaces)
             {
-                raceChanged |= DrawWeightSlider(listing, race.LabelCap.ToString(), displayConfig.raceWeights, race.defName, raceTotal, "FRD_RaceWeightTooltip");
+                string inputKey = "race/" + record.Def.defName + "/" + race.defName;
+                raceChanged |= DrawWeightSlider(listing, race.LabelCap.ToString(), displayConfig.raceWeights, race.defName, raceKeys, inputKey, "FRD_RaceWeightTooltip");
             }
             if (raceChanged)
             {
@@ -444,10 +446,24 @@ namespace MixedPeoplesFactions
                     RaceXenotypeSettings pool = GetOrCreateRaceXenotypeSettings(record.Def, displayConfig, race);
                     listing.GapLine();
                     listing.Label("FRD_RaceXenotypeSection".Translate(race.LabelCap));
-                    float total = FRD_XenotypeService.ActiveWeightTotal(pool.weights, race, false);
-                    foreach (XenotypeDef xenotype in FRD_XenotypeService.GetAllowedXenotypes(race))
+                    IReadOnlyList<FRD_XenotypeChoice> allowedChoices = FRD_XenotypeService.GetAllowedChoices(race);
+                    List<string> xenotypeKeys = allowedChoices.Select(choice => choice.Key).ToList();
+                    foreach (FRD_XenotypeChoice choice in allowedChoices.Where(choice => !choice.IsCustom))
                     {
-                        xenotypeChanged |= DrawWeightSlider(listing, xenotype.LabelCap.ToString(), pool.weights, FRD_XenotypeService.KeyFor(xenotype), total, "FRD_XenotypeWeightTooltip");
+                        string inputKey = "xenotype/" + record.Def.defName + "/" + race.defName + "/" + choice.Key;
+                        xenotypeChanged |= DrawWeightSlider(listing, choice.Label, pool.weights, choice.Key, xenotypeKeys, inputKey, "FRD_XenotypeWeightTooltip");
+                    }
+
+                    List<FRD_XenotypeChoice> customChoices = allowedChoices.Where(choice => choice.IsCustom).ToList();
+                    if (customChoices.Count > 0)
+                    {
+                        listing.Gap(4f);
+                        listing.Label("FRD_PlayerXenotypePresets".Translate());
+                        foreach (FRD_XenotypeChoice choice in customChoices)
+                        {
+                            string inputKey = "xenotype/" + record.Def.defName + "/" + race.defName + "/" + choice.Key;
+                            xenotypeChanged |= DrawWeightSlider(listing, choice.Label, pool.weights, choice.Key, xenotypeKeys, inputKey, "FRD_CustomXenotypeWeightTooltip");
+                        }
                     }
                 }
                 if (xenotypeChanged)
@@ -475,6 +491,7 @@ namespace MixedPeoplesFactions
                     MPF_Injector.RestoreFaction(record.Def);
                 }
                 NormalizeAllSettings();
+                weightInputBuffers.Clear();
                 MPF_Injector.ApplyAll(this);
                 Messages.Message("FRD_OriginalRulesRestored".Translate(record.Label), MessageTypeDefOf.NeutralEvent, false);
             }
@@ -489,7 +506,12 @@ namespace MixedPeoplesFactions
             {
                 foreach (ThingDef race in FRD_RaceRegistry.HumanlikeRaces.Where(race => GetWeight(config.raceWeights, race.defName) > 0f))
                 {
-                    height += 55f + FRD_XenotypeService.GetAllowedXenotypes(race).Count * 32f;
+                    IReadOnlyList<FRD_XenotypeChoice> choices = FRD_XenotypeService.GetAllowedChoices(race);
+                    height += 55f + choices.Count * 32f;
+                    if (choices.Any(choice => choice.IsCustom))
+                    {
+                        height += 32f;
+                    }
                 }
             }
             return height;
@@ -525,14 +547,96 @@ namespace MixedPeoplesFactions
             }
         }
 
-        private static bool DrawWeightSlider(Listing_Standard listing, string label, Dictionary<string, float> weights, string key, float total, string tooltipKey)
+        private bool DrawWeightSlider(Listing_Standard listing, string label, Dictionary<string, float> weights, string key, IReadOnlyList<string> activeKeys, string inputKey, string tooltipKey)
         {
+            const float numericFieldWidth = 58f;
+            const float percentSuffixWidth = 14f;
+            const float controlGap = 6f;
             float value = GetWeight(weights, key);
+            float total = activeKeys.Sum(activeKey => GetWeight(weights, activeKey));
             float percentage = total <= 0f ? 0f : value / total * 100f;
             string displayedLabel = label + "  " + percentage.ToString("0.#", CultureInfo.InvariantCulture) + "%";
-            float next = listing.SliderLabeled(displayedLabel, value, 0f, 100f, 0.58f, tooltipKey.Translate());
-            weights[key] = Mathf.Clamp(next, 0f, 100f);
-            return Math.Abs(weights[key] - value) > 0.0001f;
+
+            Rect row = listing.GetRect(30f);
+            Rect labelRect = row.LeftPart(0.52f);
+            Rect percentRect = new Rect(row.xMax - percentSuffixWidth, row.y, percentSuffixWidth, row.height);
+            Rect numericRect = new Rect(percentRect.x - numericFieldWidth, row.y + 3f, numericFieldWidth, 24f);
+            Rect sliderRect = new Rect(labelRect.xMax, row.y, Math.Max(1f, numericRect.x - labelRect.xMax - controlGap), row.height);
+
+            Text.Anchor = TextAnchor.MiddleLeft;
+            Widgets.Label(labelRect, displayedLabel);
+            Widgets.Label(percentRect, "%");
+            Text.Anchor = TextAnchor.UpperLeft;
+            TooltipHandler.TipRegion(row, tooltipKey.Translate());
+
+            float next = Widgets.HorizontalSlider(sliderRect, value, 0f, 100f, middleAlignment: true);
+            bool sliderChanged = Math.Abs(next - value) > 0.0001f;
+            if (sliderChanged)
+            {
+                weights[key] = Mathf.Clamp(next, 0f, 100f);
+                total = activeKeys.Sum(activeKey => GetWeight(weights, activeKey));
+                percentage = total <= 0f ? 0f : weights[key] / total * 100f;
+                weightInputBuffers.Clear();
+            }
+
+            if (!weightInputBuffers.TryGetValue(inputKey, out string buffer))
+            {
+                buffer = percentage.ToString("0.##", CultureInfo.CurrentCulture);
+            }
+
+            float enteredPercentage = percentage;
+            Widgets.TextFieldNumeric(numericRect, ref enteredPercentage, ref buffer, 0f, 100f);
+            bool percentageChanged = Math.Abs(enteredPercentage - percentage) > 0.0001f;
+            if (percentageChanged)
+            {
+                SetWeightPercentage(weights, key, activeKeys, enteredPercentage);
+                weightInputBuffers.Clear();
+            }
+            else
+            {
+                weightInputBuffers[inputKey] = buffer;
+            }
+
+            listing.Gap(2f);
+            return sliderChanged || percentageChanged;
+        }
+
+        private static void SetWeightPercentage(Dictionary<string, float> weights, string key, IReadOnlyList<string> activeKeys, float percentage)
+        {
+            List<string> keys = activeKeys
+                .Where(activeKey => !string.IsNullOrEmpty(activeKey) && (activeKey == key || GetWeight(weights, activeKey) > 0f))
+                .Distinct()
+                .ToList();
+            if (!keys.Contains(key))
+            {
+                keys.Add(key);
+            }
+            if (keys.Count == 1)
+            {
+                weights[key] = 100f;
+                return;
+            }
+
+            float target = Mathf.Clamp(percentage, 0f, 100f);
+            float remaining = 100f - target;
+            float otherTotal = keys.Where(activeKey => activeKey != key).Sum(activeKey => GetWeight(weights, activeKey));
+            weights[key] = target;
+            if (otherTotal > 0f)
+            {
+                float scale = remaining / otherTotal;
+                foreach (string activeKey in keys.Where(activeKey => activeKey != key))
+                {
+                    weights[activeKey] = Mathf.Clamp(GetWeight(weights, activeKey) * scale, 0f, 100f);
+                }
+            }
+            else
+            {
+                float equalWeight = remaining / (keys.Count - 1);
+                foreach (string activeKey in keys.Where(activeKey => activeKey != key))
+                {
+                    weights[activeKey] = equalWeight;
+                }
+            }
         }
 
         private static bool IsBuiltInMixedFaction(FactionDef faction)

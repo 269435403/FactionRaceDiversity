@@ -17,6 +17,8 @@
   <FRD_BiotechUnavailable>Biotech is not active, so xenotype controls are unavailable.</FRD_BiotechUnavailable>
   <FRD_XenotypeSection>Xenotype weights</FRD_XenotypeSection>
   <FRD_XenotypeWeightTooltip>Higher weights make this xenotype more likely. Special member types may keep their own rules.</FRD_XenotypeWeightTooltip>
+  <FRD_PlayerXenotypePresets>Player-created presets</FRD_PlayerXenotypePresets>
+  <FRD_CustomXenotypeWeightTooltip>This saved player preset has no Race metadata. A positive weight explicitly allows it for this Race; presets that disable violence are excluded from combat generation.</FRD_CustomXenotypeWeightTooltip>
   <FRD_RaceSection>Race proportions</FRD_RaceSection>
   <FRD_RaceXenotypeSection>{0} xenotype proportions</FRD_RaceXenotypeSection>
   <FRD_RaceHasNoPawnKinds>(no compatible member type)</FRD_RaceHasNoPawnKinds>

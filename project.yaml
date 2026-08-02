@@ -1,0 +1,49 @@
+schema_version: 2
+workspace:
+  config: "D:\\RimWorldModding\\workspace.yaml"
+project:
+  id: "yyyyy_MixedPeoplesFactions"
+  package_id: "yyyyy.mixedpeoplesfactions"
+  kind: "mixed"
+  game_version: "1.6"
+paths:
+  dev_root: "D:\\RimWorldModding\\projects\\yyyyy_MixedPeoplesFactions"
+  runtime_root: "D:\\steam\\steamapps\\common\\RimWorld\\Mods\\yyyyy_MixedPeoplesFactions"
+  csproj: "Source\\MixedPeoplesFactions\\MixedPeoplesFactions.csproj"
+  assemblies_output: "1.6\\Assemblies"
+metadata:
+  about_xml: "About\\About.xml"
+  load_folders: null
+build:
+  type: "dotnet"
+  configuration: "Release"
+  command: null
+  outputs:
+    - "1.6\\Assemblies\\MixedPeoplesFactions.dll"
+wiki:
+  enabled: true
+  mode: "mixed"
+  output: "Wiki"
+  allow_missing_translations: false
+sync:
+  required:
+    - "About"
+    - "1.6"
+  optional: []
+  exclude:
+    - "**/*.pdb"
+    - "**/*.log"
+    - "**/Source/**"
+    - "**/bin/**"
+    - "**/obj/**"
+acceptance:
+  require_game_load: true
+  required_package_ids:
+    - "yyyyy.mixedpeoplesfactions"
+  error_patterns: []
+git:
+  enabled: true
+  remote: "origin"
+  owner: "269435403"
+  repository: "FactionRaceDiversity"
+  branch: "main"

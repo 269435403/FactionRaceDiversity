@@ -18,6 +18,7 @@ Faction Race Diversity adds per-faction race proportions and per-race xenotype p
 |---|---|
 | **按阵营设置种族比例** | 每个安全支持的人形阵营拥有独立的 Human、HAR 及其他人形 Race 权重。 / Each safely supported humanlike faction gets its own race weights. |
 | **每个种族独立异种池** | Human、Ratkin、Axolotl 等 Race 分别保存自己的异种比例，避免把一个种族的异种混进另一个种族。 / Every race keeps a separate xenotype pool. |
+| **发现玩家异种预设** | 自动读取游戏保存的自定义异种预设，并以默认 0 权重显示在每个 Race 的异种池中；非人类 Race 需要玩家明确设为正权重。 / Saved custom xenotype presets are discovered automatically with zero default weight; non-Human use requires an explicit positive weight. |
 | **覆盖常见生成路线** | 普通袭击、援军、访客、商队商人和护卫，以及人形商品会尽量遵守设置。动物与驮兽不参与替换。 / Raids, reinforcements, visitors, caravan traders and guards, and humanlike trade pawns are covered where safe. |
 | **同种族扩展并存** | 多个同 Race 阵营扩展同时启用时，按目标阵营稳定选择人物种类变体，避免最后加载的扩展覆盖全部阵营。 / Multiple faction expansions for one race use stable per-faction PawnKind variants. |
 | **两个百族阵营** | “百族同盟”与“粗野的百族同盟”在遵循原始规则时，对当前所有可用人形 Race 永久等权。 / Two bundled mixed-peoples factions keep equal weights across all available humanlike races under original rules. |
@@ -28,8 +29,8 @@ Faction Race Diversity adds per-faction race proportions and per-race xenotype p
 
 1. 打开 **选项 → 模组设置 → 阵营种族多样性**。  
    Open **Options → Mod settings → Faction Race Diversity**.
-2. 选择阵营，直接调整 Race 比例；正权重 Race 会显示自己的异种比例。  
-   Select a faction, edit race weights, then configure the xenotype pool shown under each positively weighted race.
+2. 选择阵营，直接调整 Race 比例；正权重 Race 会显示自己的 Def 异种和“玩家制作的预设”。新发现的玩家预设默认为 0，不会自行加入生成。  
+   Select a faction and edit race weights. Each positively weighted race shows Def xenotypes and player-created presets; newly discovered presets start at zero and do not enter generation automatically.
 3. 点击 **遵循原始规则** 可删除外部阵营的自定义覆盖；两个内置阵营会恢复所有当前人形 Race 等权。  
    **Follow original rules** removes custom overrides for external factions and restores equal weights for the two bundled factions.
 
@@ -116,6 +117,9 @@ Faction Race Diversity adds per-faction race proportions and per-race xenotype p
 **为什么设置了 100% 仍可能不完全符合？**  
 特殊袭击角色、固定任务角色和第三方模组自定义生成入口可能带有额外限制。请在 GitHub Issues 提交日志、模组列表、目标阵营与预期 Race。
 
+**为什么玩家预设在所有 Race 下都能看到？**  
+原版自定义异种预设不保存所属 Race。Human 可以直接使用；为 HAR 或其他非人类 Race 设置正权重代表你明确允许该组合，请自行确认外观与基因兼容性。禁用暴力的预设不会用于袭击等战斗生成。
+
 **中文交流与反馈**  
 QQ群：**672646837**
 
@@ -133,8 +137,22 @@ Quest pawns, scenario pawns, babies, mutants, special roles, hard-forced xenotyp
 **Why can a 100% setting still miss some pawns?**  
 Special raid roles, fixed quest pawns and custom generation paths from other mods may impose extra constraints. Please report the log, mod list, faction and expected race in GitHub Issues.
 
+**Why is a player preset listed under every race?**  
+Vanilla custom xenotype presets do not store Race ownership. Human can use them directly; assigning a positive weight under a HAR or other non-Human race is an explicit opt-in, so verify graphics and gene compatibility yourself. Presets that disable violence are excluded from combat generation.
+
 ![GitHub 链接 / GitHub Link](抬头图/05_GitHub链接_GitHub_Link.png)
 
 - Repository: <https://github.com/269435403/FactionRaceDiversity>
 - Bugs and compatibility reports: <https://github.com/269435403/FactionRaceDiversity/issues>
-- 交流群：QQ **672646837**
+- 中文交流群：QQ **672646837**
+
+## Build and validation
+
+```powershell
+dotnet build .\Source\MixedPeoplesFactions\MixedPeoplesFactions.csproj --configuration Release --nologo /p:RimWorldDir="<RimWorld install directory>"
+python .\测试\运行静态测试.py
+```
+
+The release assembly is written to `1.6/Assemblies/MixedPeoplesFactions.dll`. A successful build and static test do not replace an in-game test with the intended mod list.
+
+Development notes, compatibility rules, test matrices and the generated Def wiki are included in this repository.

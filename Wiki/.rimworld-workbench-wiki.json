@@ -1,0 +1,15 @@
+{
+  "owner": "rimworld-mod-workbench/project_wiki.py",
+  "schema": 1,
+  "wiki_mode": "mixed",
+  "output_root": "D:\\RimWorldModding\\projects\\yyyyy_MixedPeoplesFactions\\Wiki",
+  "source_root": "D:\\RimWorldModding\\projects\\yyyyy_MixedPeoplesFactions",
+  "managed_files": [
+    "Translations/_翻译索引.md",
+    "Translations/_翻译覆盖.md",
+    "_工作台Wiki校验.json",
+    "_工作台Wiki清单.json",
+    "_工作台总索引.md"
+  ],
+  "created_or_updated": "2026-08-02"
+}

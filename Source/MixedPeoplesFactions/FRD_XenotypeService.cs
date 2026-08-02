@@ -6,18 +6,54 @@ using Verse;
 
 namespace MixedPeoplesFactions
 {
+    public sealed class FRD_XenotypeChoice
+    {
+        public XenotypeDef Xenotype { get; }
+        public CustomXenotype CustomXenotype { get; }
+        public string Key { get; }
+
+        public bool IsCustom => CustomXenotype != null;
+
+        public string Label => IsCustom
+            ? (!CustomXenotype.name.NullOrEmpty()
+                ? CustomXenotype.name
+                : !CustomXenotype.fileName.NullOrEmpty() ? CustomXenotype.fileName : Key).CapitalizeFirst()
+            : Xenotype?.LabelCap.ToString();
+
+        public bool CanGenerateAsCombatant => !IsCustom
+            ? Xenotype?.canGenerateAsCombatant == true
+            : CustomXenotype.genes.NullOrEmpty()
+                || CustomXenotype.genes.All(gene => gene == null || !gene.disabledWorkTags.HasFlag(WorkTags.Violent));
+
+        internal FRD_XenotypeChoice(XenotypeDef xenotype, CustomXenotype customXenotype, string key)
+        {
+            Xenotype = xenotype;
+            CustomXenotype = customXenotype;
+            Key = key;
+        }
+    }
+
     public static class FRD_XenotypeService
     {
+        private const string CustomKeyPrefix = "FRD_CustomXenotype_";
         private static readonly Dictionary<ThingDef, List<XenotypeDef>> allowedByRace = new Dictionary<ThingDef, List<XenotypeDef>>();
+        private static readonly Dictionary<ThingDef, List<FRD_XenotypeChoice>> choicesByRace = new Dictionary<ThingDef, List<FRD_XenotypeChoice>>();
         private static readonly Dictionary<ThingDef, HashSet<XenotypeDef>> nativeByRace = new Dictionary<ThingDef, HashSet<XenotypeDef>>();
         private static readonly HashSet<XenotypeDef> claimedByNonHumanRace = new HashSet<XenotypeDef>();
+        private static List<CustomXenotype> savedCustomSource;
+        private static int savedCustomCount = -1;
+        private static List<FRD_XenotypeChoice> customChoices = new List<FRD_XenotypeChoice>();
         private static bool associationsBuilt;
 
         public static void ClearCaches()
         {
             allowedByRace.Clear();
+            choicesByRace.Clear();
             nativeByRace.Clear();
             claimedByNonHumanRace.Clear();
+            savedCustomSource = null;
+            savedCustomCount = -1;
+            customChoices.Clear();
             associationsBuilt = false;
             FRD_HarCompatibility.ClearCaches();
         }
@@ -41,6 +77,27 @@ namespace MixedPeoplesFactions
                 .ToList();
             allowedByRace[race] = allowed;
             return allowed;
+        }
+
+        public static IReadOnlyList<FRD_XenotypeChoice> GetAllowedChoices(ThingDef race)
+        {
+            if (!ModsConfig.BiotechActive || race?.race?.Humanlike != true)
+            {
+                return Array.Empty<FRD_XenotypeChoice>();
+            }
+
+            EnsureCustomChoices();
+            if (choicesByRace.TryGetValue(race, out List<FRD_XenotypeChoice> cached))
+            {
+                return cached;
+            }
+
+            List<FRD_XenotypeChoice> choices = GetAllowedXenotypes(race)
+                .Select(xenotype => new FRD_XenotypeChoice(xenotype, null, KeyFor(xenotype)))
+                .Concat(customChoices)
+                .ToList();
+            choicesByRace[race] = choices;
+            return choices;
         }
 
         public static bool IsCompatibleWithRace(XenotypeDef xenotype, ThingDef race, bool requireCombatant)
@@ -133,12 +190,12 @@ namespace MixedPeoplesFactions
                 return;
             }
             settings.weights = settings.weights ?? new Dictionary<string, float>();
-            HashSet<string> allowedKeys = new HashSet<string>(GetAllowedXenotypes(race).Select(KeyFor));
-            foreach (string staleKey in settings.weights.Keys.Where(key => !allowedKeys.Contains(key)).ToList())
+            HashSet<string> allowedKeys = new HashSet<string>(GetAllowedChoices(race).Select(choice => choice.Key));
+            foreach (string staleKey in settings.weights.Keys.Where(key => !allowedKeys.Contains(key) && !IsCustomKey(key)).ToList())
             {
                 settings.weights.Remove(staleKey);
             }
-            foreach (string key in allowedKeys)
+            foreach (string key in GetAllowedXenotypes(race).Select(KeyFor))
             {
                 if (!settings.weights.ContainsKey(key))
                 {
@@ -153,9 +210,9 @@ namespace MixedPeoplesFactions
             {
                 return 0f;
             }
-            return GetAllowedXenotypes(race)
-                .Where(xenotype => !requireCombatant || xenotype.canGenerateAsCombatant)
-                .Sum(xenotype => GetWeight(weights, KeyFor(xenotype)));
+            return GetAllowedChoices(race)
+                .Where(choice => !requireCombatant || choice.CanGenerateAsCombatant)
+                .Sum(choice => GetWeight(weights, choice.Key));
         }
 
         public static XenotypeDef SelectWeighted(Dictionary<string, float> weights, ThingDef race, bool requireCombatant)
@@ -183,9 +240,55 @@ namespace MixedPeoplesFactions
             return choices[choices.Count - 1].Key;
         }
 
+        public static FRD_XenotypeChoice SelectWeightedChoice(Dictionary<string, float> weights, ThingDef race, bool requireCombatant)
+        {
+            List<KeyValuePair<FRD_XenotypeChoice, float>> choices = GetAllowedChoices(race)
+                .Where(choice => !requireCombatant || choice.CanGenerateAsCombatant)
+                .Select(choice => new KeyValuePair<FRD_XenotypeChoice, float>(choice, GetWeight(weights, choice.Key)))
+                .Where(choice => choice.Value > 0f)
+                .ToList();
+
+            float total = choices.Sum(choice => choice.Value);
+            if (total <= 0f)
+            {
+                return null;
+            }
+            float pick = Rand.Value * total;
+            foreach (KeyValuePair<FRD_XenotypeChoice, float> choice in choices)
+            {
+                pick -= choice.Value;
+                if (pick <= 0f)
+                {
+                    return choice.Key;
+                }
+            }
+            return choices[choices.Count - 1].Key;
+        }
+
         public static string KeyFor(XenotypeDef xenotype)
         {
             return xenotype == XenotypeDefOf.Baseliner ? MPF_Settings.BaselinerKey : xenotype?.defName;
+        }
+
+        public static string KeyFor(CustomXenotype xenotype)
+        {
+            if (xenotype == null)
+            {
+                return null;
+            }
+
+            string identity = !xenotype.fileName.NullOrEmpty()
+                ? "file|" + xenotype.fileName.Trim().ToUpperInvariant()
+                : "value|" + xenotype.name + "|" + xenotype.inheritable + "|" + string.Join("|", (xenotype.genes ?? new List<GeneDef>())
+                    .Where(gene => gene != null)
+                    .Select(gene => gene.defName)
+                    .OrderBy(defName => defName, StringComparer.Ordinal));
+            return CustomKeyPrefix + StableHash(identity).ToString("X16");
+        }
+
+        public static bool IsCustomKey(string key)
+        {
+            return key != null && key.StartsWith(CustomKeyPrefix, StringComparison.Ordinal);
         }
 
         private static bool IsSelectableForRace(XenotypeDef xenotype, ThingDef race, bool requireCombatant)
@@ -259,6 +362,58 @@ namespace MixedPeoplesFactions
         {
             string packageId = xenotype?.modContentPack?.PackageIdPlayerFacing;
             return string.IsNullOrEmpty(packageId) || packageId.StartsWith("Ludeon.RimWorld", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static void EnsureCustomChoices()
+        {
+            List<CustomXenotype> saved = null;
+            try
+            {
+                saved = CharacterCardUtility.CustomXenotypesForReading;
+            }
+            catch (Exception exception)
+            {
+                Log.WarningOnce("[FactionRaceDiversity] Player-created xenotype presets could not be loaded. " + exception, 174832504);
+            }
+
+            int savedCount = saved?.Count ?? 0;
+            if (ReferenceEquals(saved, savedCustomSource)
+                && savedCount == savedCustomCount)
+            {
+                return;
+            }
+
+            savedCustomSource = saved;
+            savedCustomCount = savedCount;
+
+            Dictionary<string, FRD_XenotypeChoice> discovered = new Dictionary<string, FRD_XenotypeChoice>();
+            foreach (CustomXenotype custom in saved ?? new List<CustomXenotype>())
+            {
+                string key = KeyFor(custom);
+                if (custom != null && key != null && !discovered.ContainsKey(key))
+                {
+                    discovered[key] = new FRD_XenotypeChoice(null, custom, key);
+                }
+            }
+
+            customChoices = discovered.Values
+                .OrderBy(choice => choice.Label, StringComparer.CurrentCultureIgnoreCase)
+                .ThenBy(choice => choice.Key, StringComparer.Ordinal)
+                .ToList();
+            choicesByRace.Clear();
+        }
+
+        private static ulong StableHash(string value)
+        {
+            const ulong offset = 14695981039346656037UL;
+            const ulong prime = 1099511628211UL;
+            ulong hash = offset;
+            foreach (char character in value ?? string.Empty)
+            {
+                hash ^= character;
+                hash *= prime;
+            }
+            return hash;
         }
 
         private static void AddFromSet(HashSet<XenotypeDef> target, XenotypeSet set, ThingDef race)

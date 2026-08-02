@@ -10,7 +10,7 @@
     <AppendTargetFrameworkToOutputPath>False</AppendTargetFrameworkToOutputPath>
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
-    <RimWorldDir Condition="'$(RimWorldDir)' == ''">$(MSBuildProjectDirectory)\..\..\..\..</RimWorldDir>
+    <RimWorldDir Condition="'$(RimWorldDir)' == ''">D:\steam\steamapps\common\RimWorld</RimWorldDir>
     <HarmonyPath Condition="'$(HarmonyPath)' == '' and Exists('$(RimWorldDir)\..\..\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll')">$(RimWorldDir)\..\..\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll</HarmonyPath>
     <HarmonyPath Condition="'$(HarmonyPath)' == '' and Exists('$(RimWorldDir)\Mods\Harmony\Current\Assemblies\0Harmony.dll')">$(RimWorldDir)\Mods\Harmony\Current\Assemblies\0Harmony.dll</HarmonyPath>
     <OutputPath>$(MSBuildProjectDirectory)\..\..\1.6\Assemblies\</OutputPath>

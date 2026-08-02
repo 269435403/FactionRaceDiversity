@@ -1,0 +1,21 @@
+{
+  "owner": "rimworld-mod-workbench/project_wiki.py",
+  "schema": 1,
+  "generated_date": "2026-08-02",
+  "mode": "mixed",
+  "project_root": "D:\\RimWorldModding\\projects\\yyyyy_MixedPeoplesFactions",
+  "output_root": "D:\\RimWorldModding\\projects\\yyyyy_MixedPeoplesFactions\\Wiki",
+  "managed_files": {
+    "Translations/_翻译索引.md": "63B3D2252403A4F00DC1910AB413A5B86E277C894BF78FCE6EDCEB41536D24C1",
+    "Translations/_翻译覆盖.md": "B2179645063E41B4A033D851CD5AB77956DE4434E2531A380E9953E789E2EDB9",
+    "_工作台总索引.md": "331C6F2AC8FBE3984AF5CCE6A253B28EC54E046FF1EDC9CCC07A568B0F57A194",
+    "_工作台Wiki校验.json": "F67E3AB15DF7B1754D4480E45308CAF2F93153CE9F55EBDE9D8B8EC6CAE64D0D"
+  },
+  "preserved_manual_markdown": [
+    "Defs/FactionDef.md",
+    "Defs/MixedPeoplesFactions.FRD_FactionCompatibilitySetDef.md",
+    "Defs/MixedPeoplesFactions.FRD_RaceCompatibilityDef.md",
+    "_总索引.md"
+  ],
+  "validation_status": "ok"
+}
